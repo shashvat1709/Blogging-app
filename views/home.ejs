@@ -8,39 +8,38 @@
 
 </head>
 
-<body>
-   <%- include('./partials/nav') %>   
-   <div class="container mt-3">
+<body class="bg-light">
+  <%- include('./partials/nav') %>
 
-    <% blogs.forEach(blog =>{ %>
-        <div class="card mt-3" style="width: 18rem;">
-            <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"><%= blog.title %></h5>
-              <p class="card-text"><%= blog.body %></p>
-              <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read Blog</a>
+  <div class="container py-5">
+    <div class="mx-auto" style="max-width: 800px;">
+      <% blogs.forEach(blog => { %>
+        <div class="card mb-4 shadow-sm rounded-3 overflow-hidden">
+          <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="cover" style="height: 200px; object-fit: cover;">
 
-            </div>
+          <div class="card-body">
+            <h5 class="card-title"><%= blog.title %></h5>
+            <p class="card-text text-muted" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+              <%= blog.body %>
+            </p>
+            <a href="/blog/<%= blog._id %>" class="btn btn-primary btn-sm mt-2">Read Blog</a>
+
+            <% if (blog.createdBy) { %>
+              <div class="d-flex align-items-center gap-2 mt-3">
+                <img src="<%= blog.createdBy.profileImageURL || '/default-avatar.png' %>" class="rounded-circle" width="40" height="40" style="object-fit: cover;" />
+                <span class="text-muted small"><%= blog.createdBy.fullName %></span>
+              </div>
+            <% } else { %>
+              <p class="text-muted small mt-3">Author unknown</p>
+            <% } %>
           </div>
-
-          <div class="container mt-4">
-
-            <img src="<%= blog.createdBy.profileImageURL %>" width="100px" /> 
-             <%= blog.createdBy.fullName %>
-          </div>
-     
         </div>
-          
-    <%  }) %>
-    
+      <% }) %>
+    </div>
+  </div>
 
-   </div>
-
-
-
-
-
-    <%- include('./partials/scripts') %>
+  <%- include('./partials/scripts') %>
 </body>
+
 
 </html>
